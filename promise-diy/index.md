@@ -8,10 +8,17 @@ Promise是JavaScript中用于处理异步操作的对象。它有三种状态：
 
 Promise的状态一旦改变，就不会再变，不可能从fulfilled变为pending，或者从rejected变为pending。
 
-Promise本身接受一个参数executor, executor接受两个参数resolve和reject，resolve和reject是两个函数，用于改变Promise的状态。
+Promise本身接受一个参数executor, executor接受两个参数resolve和reject，
+
+resolve和reject是两个函数，用于改变Promise的状态。
+
 - resolve: 将Promise的状态从pending改为fulfilled, 执行onFulfilled回调函数, 设置Promise的value
 - reject: 将Promise的状态从pending改为rejected, 执行onRejected回调函数, 设置Promise的reason
 
+
+Promise的属性还包括两个回调函数数组，之所以是数组而不是单个变量，是因为Promise可以有多个then方法，所以需要一个数组来存储这些回调函数。
+
+详细见[从一道让我失眠的 Promise 面试题开始，深入分析 Promise 实现细节](https://juejin.cn/post/6945319439772434469#heading-13)
 ### 思维导图
 
 ```mermaid
