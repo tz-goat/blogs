@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Questions</title>
+</head>
+
+<body>
+    <div style="width: 200px; height: 200px; background: green;"></div>
+</body>
+<style>
+    /* 方法1 */
+    /* div {
+        width: 200px;
+        height: 200px;
+        background: green;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+    } */
+    /* 方法2 */
+    /* div {
+        width: 200px;
+        height: 200px;
+        background: green;
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -100px;
+        margin-top: -100px;
+    } */
+    /* 方法3 */
+    /* div {
+        width: 200px;
+        height: 200px;
+        background: green;
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    } */
+
+    /* 方法4 */
+    /* body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+    /* 方法5 */
+    body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+    }
+</style>
+
+</html>
