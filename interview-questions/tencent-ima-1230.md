@@ -32,10 +32,27 @@
 - 这里我之前在掘金写的文章就发挥作用了，好好吹了一下，展现了我写的文章还有，然后继续介绍Arc浏览器的特性还有快速启动器Raycast
 
 ## 技术问题
-1. 使用 HTML、CSS 和 JavaScript 实现一个简单的时钟，包括分针和秒针
-2. 根据data中的键对，替换template中的变量
+### 使用 HTML、CSS 和 JavaScript 实现一个简单的时钟，包括分针和秒针
+
+反思：没有考虑到通过现有时间对象`new Date()`来精确地反应现在的时间
+  - 获取当前的`hour`, `minutes`, `seconds`来决定时针转动的角度
+  - 然后每1秒更新一次，这样就不用花时间计算
+  ```js
+  setInterval(updateClock, 1000);
+  ```
+  - 关于样式：结合时钟半径，和时针的长度来决定`top`的取值
+  - `transform` 执行相对动画，允许你对元素进行旋转、缩放、移动和倾斜等操作
+  - `transform-origin`：决定动画，属性定义了元素的旋转点（或称为基点）。默认情况下，元素的旋转点是元素的中心点`（50%, 50%）`
+
+**实例代码：**
+
+1. [时钟-个人解法](./tencent-clock-1.html)
+2. [时钟-豆包解法](./tencent-clock-2.html)
+
+### 根据data中的键对，替换template中的变量
    ```template = 'aaa {{b}} ccc {{d}}'， data = {b: 'hello', d: 'world'}```
-3. HTTP缓存
+
+### HTTP缓存
    - 强缓存和协商缓存，以及相关的响应头
 4. HTTPS的通信过程
    - 这里可以忽略TCP三次握手，直接说HTTPS的通信过程，主要讲讲HTTPS证书

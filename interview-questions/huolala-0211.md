@@ -258,6 +258,9 @@ Reflect.set()
 
 ### TypeScript
 
+#### 参考
+- [TypeScript - 理清Omit与Exclude的关系与区别](https://juejin.cn/post/7091311285995831304)
+
 #### interface与type的区别
 
 - interface命令与type命令作用类似，都可以表示对象类型
