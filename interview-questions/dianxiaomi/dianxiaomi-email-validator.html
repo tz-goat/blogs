@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>邮箱验证</title>
+    <style>
+        .input-wrapper {
+            margin: 20px;
+        }
+
+        input {
+            padding: 8px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+
+        input:invalid+.error {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="input-wrapper">
+        <input type="email" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" placeholder="请输入邮箱地址" required>
+        <span class="error">请输入有效的邮箱地址</span>
+    </div>
+
+    <script>
+        const input = document.querySelector('input');
+
+        // 分解说明
+        // ^ - 开始
+        // [a-zA-Z0-9._%+-]+ - 用户名部分，允许字母、数字和特殊字符
+        // @ - @符号
+        // [a-zA-Z0-9.-]+ - 域名部分
+        // \. - 点号
+        // [a-zA-Z]{2,} - 顶级域名至少2个字符
+        // $ - 结束
+        // 更详细的邮箱验证正则
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        // String.prototype.match(), string.match(regex)用于获取字符串中符合正则规则的子字符串
+        // RegExp.prototype.test(), regex.test(str)用于检查字符串是否有能match到的字符串，直接返回一个布尔值
+
+        input.addEventListener('input', (e) => {
+            const email = e.target.value;
+            // if (emailRegex.test(email)) {
+            //     input.setCustomValidity('');
+            // } else {
+            //     input.setCustomValidity('请输入有效的邮箱地址');
+            // }
+        });
+    </script>
+</body>
+
+</html>

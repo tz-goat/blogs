@@ -17,6 +17,7 @@
   有两个值：content-box, border-box
   - 默认是content-box
   - 如果设置为border-box，则width和height包括了padding和border
+
 #### 水平垂直居中有哪些方式
 
 参考：[CSS-水平居中、垂直居中、水平垂直居中](https://segmentfault.com/a/1190000014116655)
@@ -240,7 +241,9 @@ Reflect 对象提供的方法与 Proxy 对象的方法一一对应
 
 Reflect 中文解释可以是映射,也正好说明其设计初衷。
 
-简单来说 Proxy 对象代理并拦截目标对象特定行为,而这些行为都有其默认行为,而 Reflect 对象就是方便可以实现这些默认行为,Proxy 有多少拦截类型,Reflect 就实现了多少对应类型的映射函数
+简单来说 Proxy 对象代理并拦截目标对象特定行为,而这些行为都有其默认行为,而 Reflect 对象就是方便可以实现这些默认行为,
+
+Proxy 有多少拦截类型,Reflect 就实现了多少对应类型的映射函数
 
 ```js
 // Proxy的处理器函数
@@ -263,8 +266,9 @@ Reflect.set()
 
 #### interface与type的区别
 
-- interface命令与type命令作用类似，都可以表示对象类型
-它们的区别有
+interface命令与type命令作用类似，都可以表示对象类型
+
+它们的区别有:
 
 1. `type`可以声明基本类型, 联合类型, 元组等, 而`interface`只能表示对象类型（包括数组、函数等）。
 2. `interface`可以继承其他类型，`type`不支持继承。
@@ -361,7 +365,7 @@ type AorBwithName = AorB & {
 
 #### 常用类型工具
 
-1. Required 必选属性: 将对象中所有属性变为必选
+1. **Required 必选属性**: 将对象中所有属性变为必选
 ```ts
 interface Todo {
   title: string;
@@ -393,7 +397,7 @@ type TodoPartial = Partial<Todo>;
 // }
 ``` 
 
-3. Readonly 只读属性: 将对象中所有属性变为只读
+3. **Readonly 只读属性**: 将对象中所有属性变为只读
 ```ts
 interface Todo {
   title: string;
@@ -409,7 +413,7 @@ type TodoReadonly = Readonly<Todo>;
 // }
 ```
 
-4. Pick 选择属性: 选择对象中的某些属性
+4. **Pick 选择属性**: 选择对象中的某些属性
 ```ts
 interface Todo {
   title: string;
@@ -424,9 +428,9 @@ type TodoPick = Pick<Todo, 'title'>;
 // }
 ``` 
 
-5. Omit 忽略属性: 忽略对象中的某些属性
+5. **Omit 忽略属性**: 忽略对象中的某些属性
 
-Omit的作用是：以一个定义好的类型位基础，踢出指定的属性，重新生成一个类型！
+- Omit的作用是：以一个定义好的类型位基础，踢出指定的属性，重新生成一个类型！
 
 ```ts
 interface Todo {
@@ -442,9 +446,9 @@ type TodoOmit = Omit<Todo, 'description'>;
 // }
 ``` 
 
-1. Exclude 排除属性: 排除对象中的某些属性
+6. **Exclude 排除属性**: 排除对象中的某些属性
 
-Exclude的作用是：从联合类型UnionType中排除一个类型ExcludedMembers, 即返回联合类型中不包含ExcludedMembers的类型, 效果如下
+- Exclude的作用是：从联合类型UnionType中排除一个类型ExcludedMembers, 即返回联合类型中不包含ExcludedMembers的类型, 效果如下
 ```ts
 interface Todo {
   title: string;

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="column">Column 1.</div>
+        <div class="column">Column 2 is a bit longer.</div>
+        <div class="column">Column 3 is longer with lots of text in it.</div>
+    </div>
+</body>
+<style>
+    .container {
+        display: table;
+        background-color: aquamarine;
+        padding: 10px;
+    }
+
+    .container>div {
+        width: 33%;
+    }
+
+    .column {
+        display: table-cell;
+        border: 1px solid #000;
+    }
+</style>
+
+</html>
