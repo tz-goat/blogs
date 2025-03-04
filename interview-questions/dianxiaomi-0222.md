@@ -222,3 +222,5 @@ const intersect = (rect1, rect2) => {
   );
 };
 ```
+
+![矩形相交实例](./dianxiaomi/rect-intersect.png)
