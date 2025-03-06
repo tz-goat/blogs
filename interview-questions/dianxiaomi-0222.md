@@ -186,10 +186,18 @@ processor.process().then(results => {
 ```js
 function getBetweenNumber(a, b) {
   const contrast = Math.abs(a - b);
+  if (contrast <= 1) return null; // 两个数之间距离小于等于1时返回null
   const min = a > b ? b : a;
-  return min + Math.floor(contrast * Math.random());
+  return min +  1 + Math.floor((contrast - 1) * Math.random()); // 返回值不应该包括边界值，所以加1
 }
 ```
+上面的返回值可能有点难理解，首先，min+1保证返回的值至少是min+1，不包含min
+
+然后是`Math.random() * contrast`的取值范围是`[0, contrast)`, 套上Math.floor之后，返回的值的取值范围是`[0, contrast - 1]`
+
+`min + 1 + contrast - 1`的值就会达到max, 也就是包含了边界值，这就不符合要求了
+
+所以这里我们的取值应该是`Math.random() * (contrast - 1)`
 
 2. 给一个有固定宽高的边框canvas， 它本身的宽高分别是w0, h0，然后输入一个图片，图片的宽高分别是w1, h1， 请给出具体的缩放比例保证这个图片一定能正好显示在这个边框中
 

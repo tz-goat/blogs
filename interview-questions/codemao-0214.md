@@ -223,31 +223,113 @@ Object.setPrototypeOf(obj, null)
 ```
 
 
-5. TypeScript
+## 5. TypeScript
 - TS中的type和interface有什么区别
 - 项目中的.d.ts的作用？
 - 为什么大型项目中要使用TS
 
 
-6. 框架
+## 6. 框架
 - Vue3和Vue2的区别
 - Vue3和React的区别
 - React中，useEffect是如何使用的，依赖项传与不传的区别
 
 
-7. HTTP协议
+## 7. HTTP协议
 - 浏览器缓存是如何实现的
 - 平常开发中打包后的HTML文件以及JS， CSS文件的处理方式
 - **localStorage, sessionStorage和IndexedDB的区别**
 - **跨域是什么，如何从纯前端的角度实现跨域**
 
-
-
-
-8. 项目经验
+## 8. 项目经验
 - 说一下自己实现过的最难的项目
 - 开发过程中遇到页面卡顿的情况，应该怎么处理（提示：可以用devtools的Performance）
-- 怎么样实现一个可拖拽的元素
+- **怎么样实现一个可拖拽的元素**
+
+因为编程猫这种拖拽的业务场景比较多，所以考这个也是可以理解吧，不过其他公司不一定会考，我简单了解一下实现即可，
+
+**实现思路-元宝**
+1. 事件监听：通过 mousedown/touchstart（开始拖动）、mousemove/touchmove（拖动中）、mouseup/touchend（结束拖动）事件实现交互。
+2. ​位置计算：记录鼠标/手指的初始位置和元素初始偏移量，实时计算拖动后的新位置。
+3. ​CSS 控制：通过 transform 或 left/top 属性动态修改元素位置。
+
+**CSS样式**
+```css
+.draggable-element {
+  width: 100px;
+  height: 100px;
+  background: #3498db;
+  color: white;
+  text-align: center;
+  line-height: 100px;
+  cursor: move;
+  position: absolute; /* 允许通过 left/top 定位 */
+  user-select: none; /* 防止拖动时选中文本 */
+}
+```
+
+**JS逻辑-重点**
+- 分PC端和移动端来添加不同事件，比如mousedown和touchstart
+- 通过`clientX`和`clientY`来获取鼠标或触摸的初始位置
+- 通过`transform`来实现元素的移动
+  - 使用 transform 代替直接修改 left/top，可触发 GPU 加速，避免重排（reflow）
+```js
+const draggableElement = document.querySelector('.draggable-element');
+
+let isDragging = false;
+let initialX = 0;
+let initialY = 0;
+let currentX = 0;
+let currentY = 0;
+
+// 监听鼠标按下事件
+draggableElement.addEventListener('mousedown', startDragging);
+// 监听触摸事件（移动端）
+draggableElement.addEventListener('touchstart', startDragging);
+
+function startDragging(e) {
+  e.preventDefault();
+  isDragging = true;
+
+  // 获取初始位置（兼容鼠标和触摸事件）
+  const clientX = e.clientX ?? e.touches[0].clientX;
+  const clientY = e.clientY ?? e.touches[0].clientY;
+
+  initialX = clientX - currentX;
+  initialY = clientY - currentY;
+
+  // 监听全局移动和释放事件
+  document.addEventListener('mousemove', onDrag);
+  document.addEventListener('touchmove', onDrag);
+
+  document.addEventListener('mouseup', stopDragging);
+  document.addEventListener('touchend', stopDragging);
+}
+
+function onDrag(e) {
+  if (!isDragging) return;
+
+  // 获取当前位置
+  const clientX = e.clientX ?? e.touches[0].clientX;
+  const clientY = e.clientY ?? e.touches[0].clientY;
+
+  // 计算新位置
+  currentX = clientX - initialX;
+  currentY = clientY - initialY;
+
+  // 应用新位置（使用 transform 优化性能）
+  draggableElement.style.transform = `translate(${currentX}px, ${currentY}px)`;
+}
+
+function stopDragging() {
+  isDragging = false;
+  // 移除全局事件监听
+  document.removeEventListener('mousemove', onDrag);
+  document.removeEventListener('mouseup', stopDragging);
+  document.removeEventListener('touchmove', onDrag);
+  document.removeEventListener('touchend', stopDragging);
+}
+```
 
 
 9. 公司相关

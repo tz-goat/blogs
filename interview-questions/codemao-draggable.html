@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="draggable-element">
+        Drage Me
+    </div>
+</body>
+<style>
+    .draggable-element {
+        width: 100px;
+        height: 100px;
+        background: #3498db;
+        color: white;
+        text-align: center;
+        line-height: 100px;
+        cursor: move;
+        position: absolute;
+        /* 允许通过 left/top 定位 */
+        user-select: none;
+        /* 防止拖动时选中文本 */
+    }
+</style>
+<script>
+    const draggableElement = document.querySelector('.draggable-element');
+
+    let isDragging = false;
+    let initialX = 0;
+    let initialY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    // 监听鼠标按下事件
+    draggableElement.addEventListener('mousedown', startDragging);
+    // 监听触摸事件（移动端）
+    draggableElement.addEventListener('touchstart', startDragging);
+
+    function startDragging(e) {
+        e.preventDefault();
+        isDragging = true;
+
+        // 获取初始位置（兼容鼠标和触摸事件）
+        const clientX = e.clientX ?? e.touches[0].clientX;
+        const clientY = e.clientY ?? e.touches[0].clientY;
+
+        initialX = clientX - currentX;
+        initialY = clientY - currentY;
+
+        // 监听全局移动和释放事件
+        document.addEventListener('mousemove', onDrag);
+        document.addEventListener('mouseup', stopDragging);
+        document.addEventListener('touchmove', onDrag);
+        document.addEventListener('touchend', stopDragging);
+    }
+
+    function onDrag(e) {
+        if (!isDragging) return;
+
+        // 获取当前位置
+        const clientX = e.clientX ?? e.touches[0].clientX;
+        const clientY = e.clientY ?? e.touches[0].clientY;
+
+        // 计算新位置
+        currentX = clientX - initialX;
+        currentY = clientY - initialY;
+
+        // 应用新位置（使用 transform 优化性能）
+        draggableElement.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    }
+
+    function stopDragging() {
+        isDragging = false;
+        // 移除全局事件监听
+        document.removeEventListener('mousemove', onDrag);
+        document.removeEventListener('mouseup', stopDragging);
+        document.removeEventListener('touchmove', onDrag);
+        document.removeEventListener('touchend', stopDragging);
+    }
+</script>
+
+</html>

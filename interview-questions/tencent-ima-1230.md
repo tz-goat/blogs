@@ -52,6 +52,53 @@
 ### 根据data中的键对，替换template中的变量
    ```template = 'aaa {{b}} ccc {{d}}'， data = {b: 'hello', d: 'world'}```
 
+解法如下
+
+使用**正则表达式**可以一次性匹配所有`{{...}}`的模式，然后通过替换函数根据匹配到的键去`data`中查找对应的值。这样只需要一次替换操作，效率更高
+
+```js
+function renderTemplate(template, data) {
+  return template.replace(/\{\{(\w+)\}\}/g, (match, key) => 
+    data.hasOwnProperty(key) ? data[key] : ''
+  );
+}
+
+const template = 'aaa {{b}} ccc {{d}}'
+const data = {b: 'hello', d: 'world'}
+console.log(renderTemplate(template, data))
+```
+
+```js
+'abc'.replace('a', 'd') // 'dbc'
+'abc'.replace(/\w/g, (match) => match + match) // 'aabbcc'
+```
+
+**进阶**
+
+- 安全防护-防止原型链污染
+
+```js
+// 防止原型链污染
+const safeData = Object.create(null);
+Object.assign(safeData, data);
+```
+
+- XSS防护
+```js
+function safeRender(template, data) {
+  const escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;'
+  };
+  return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+    const value = data[key] || '';
+    return String(value).replace(/[&<>]/g, m => escapeMap[m]);
+  });
+}
+```
+
+
 ### HTTP缓存
    - 强缓存和协商缓存，以及相关的响应头
 4. HTTPS的通信过程
